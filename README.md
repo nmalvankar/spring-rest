@@ -36,7 +36,7 @@ The app uses [Spring Fox](http://springfox.github.io/springfox/) to generate an 
 	- [OWASP Dependency Check docs](https://www.owasp.org/index.php/OWASP_Dependency_Check)
 	- [Continuous security and OWASP Dependency Check blog](https://blog.lanyonm.org/articles/2015/12/22/continuous-security-owasp-java-vulnerability-check.html)
 
-# Usage to Run on OpenShift
+## Usage to Run on OpenShift
 
 This demonstrates how to implement a full end-to-end Jenkins Pipeline for a Java application in OpenShift Container Platform. This sample demonstrates the following capabilities:
 
