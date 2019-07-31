@@ -36,9 +36,9 @@ The app uses [Spring Fox](http://springfox.github.io/springfox/) to generate an 
 	- [OWASP Dependency Check docs](https://www.owasp.org/index.php/OWASP_Dependency_Check)
 	- [Continuous security and OWASP Dependency Check blog](https://blog.lanyonm.org/articles/2015/12/22/continuous-security-owasp-java-vulnerability-check.html)
 
-# A Sample OpenShift Pipeline for a Spring Boot Application
+# Usage to Run on OpenShift
 
-This example demonstrates how to implement a full end-to-end Jenkins Pipeline for a Java application in OpenShift Container Platform. This sample demonstrates the following capabilities:
+This demonstrates how to implement a full end-to-end Jenkins Pipeline for a Java application in OpenShift Container Platform. This sample demonstrates the following capabilities:
 
 * Deploying an integrated Jenkins server inside of OpenShift
 * Running both custom and oob Jenkins slaves as pods in OpenShift
@@ -50,26 +50,14 @@ This example demonstrates how to implement a full end-to-end Jenkins Pipeline fo
 
 This quickstart can be deployed quickly using Ansible. Here are the steps.
 
-1. Clone [this repo](https://github.com/redhat-cop/container-pipelines)
-2. `cd container-pipelines/basic-spring-boot`
-3. Run `ansible-galaxy install -r requirements.yml --roles-path=galaxy`
-2. Log into an OpenShift cluster, then run the following command.
+1. Clone [this repo](https://github.com/nmalvankar/spring-rest)
+2. Run `ansible-galaxy install -r requirements.yml --roles-path=galaxy`
+3. Log into an OpenShift cluster, then run the following command.
 ```
 $ ansible-playbook -i ./.applier/ galaxy/openshift-applier/playbooks/openshift-cluster-seed.yml
 ```
 
-At this point you should have 4 projects created (`basic-spring-boot-build`, `basic-spring-boot-dev`, `basic-spring-boot-stage`, and `basic-spring-boot-prod`) with a pipeline in the `-build` project, and our [Spring Rest](https://github.com/redhat-cop/spring-rest) demo app deployed to the dev/stage/prod projects.
-
-
-## Running this on OpenShift 3.11
-
-`oc process -f .openshift/templates/deployment.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-dev -p=SA_NAMESPACE=basic-spring-boot-build -p=READINESS_PATH="/health" -p=READINESS_RESPONSE="status.:.UP"  | oc apply -f-`
-
-`oc process -f .openshift/templates/deployment.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-stage -p=SA_NAMESPACE=basic-spring-boot-build -p=READINESS_PATH="/health" -p=READINESS_RESPONSE="status.:.UP" | oc apply -f-`
-
-`oc process -f .openshift/templates/deployment.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-prod -p=SA_NAMESPACE=basic-spring-boot-build -p=READINESS_PATH="/health" -p=READINESS_RESPONSE="status.:.UP" | oc apply -f-`
-
-`oc process -f .openshift/templates/build.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-build -p=SOURCE_REPOSITORY_URL="https://github.com/nmalvankar/spring-rest.git" -p=APPLICATION_SOURCE_REPO="https://github.com/nmalvankar/spring-rest.git" | oc apply -f-`
+At this point you should have 4 projects created (`basic-spring-boot-build`, `basic-spring-boot-dev`, `basic-spring-boot-stage`, and `basic-spring-boot-prod`) with a pipeline in the `-build` project, and the Spring Rest demo app deployed to the dev/stage/prod projects.
 
 ## Architecture
 
@@ -85,7 +73,7 @@ The first template, `.openshift/templates/build.yml` is what we are calling the 
 * An `s2i` BuildConfig
 * An ImageStream for the s2i build config to push to
 
-The build template contains a default source code repo for a java application compatible with this pipelines architecture (https://github.com/redhat-cop/spring-rest).
+The build template contains a default source code repo for a java application compatible with this pipelines architecture 
 
 The second template, `.openshift/templates/deployment.yml` is the "Deploy" template. It contains:
 
