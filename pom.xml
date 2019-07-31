@@ -133,7 +133,8 @@
                 </executions>
             </plugin>
             <!-- owasp dependency check plugin -->
-            <plugin>
+            <!--
+	    <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>5.0.0-M1</version>
@@ -149,6 +150,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
         </plugins>
     </build>
 
