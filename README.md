@@ -35,4 +35,13 @@ The app uses [Spring Fox](http://springfox.github.io/springfox/) to generate an 
 	- [Maven plugin docs](https://jeremylong.github.io/DependencyCheck/dependency-check-maven/)
 	- [OWASP Dependency Check docs](https://www.owasp.org/index.php/OWASP_Dependency_Check)
 	- [Continuous security and OWASP Dependency Check blog](https://blog.lanyonm.org/articles/2015/12/22/continuous-security-owasp-java-vulnerability-check.html)
-	
+
+## Running this on OpenShift 3.11
+
+`oc process -f .openshift/templates/deployment.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-dev -p=SA_NAMESPACE=basic-spring-boot-build -p=READINESS_PATH="/health" -p=READINESS_RESPONSE="status.:.UP"  | oc apply -f-`
+
+`oc process -f .openshift/templates/deployment.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-stage -p=SA_NAMESPACE=basic-spring-boot-build -p=READINESS_PATH="/health" -p=READINESS_RESPONSE="status.:.UP" | oc apply -f-`
+
+`oc process -f .openshift/templates/deployment.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-prod -p=SA_NAMESPACE=basic-spring-boot-build -p=READINESS_PATH="/health" -p=READINESS_RESPONSE="status.:.UP" | oc apply -f-`
+
+`oc process -f .openshift/templates/build.yml -p=APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-build -p=SOURCE_REPOSITORY_URL="https://github.com/nmalvankar/spring-rest.git" -p=APPLICATION_SOURCE_REPO="https://github.com/nmalvankar/spring-rest.git" | oc apply -f-`
