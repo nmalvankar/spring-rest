@@ -1,4 +1,4 @@
-library identifier: "pipeline-library@v1.2",
+library identifier: "pipeline-library@v1.1",
 retriever: modernSCM(
   [
     $class: "GitSCMSource",
