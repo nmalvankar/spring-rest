@@ -50,11 +50,11 @@ pipeline {
     }
 
     // Run Maven unit tests
-//    stage('Unit Test'){
-//      steps {
-//        sh "mvn -B test -f ${POM_FILE}"
-//      }
-//    }
+    stage('Unit Test'){
+      steps {
+        sh "mvn -B test -f ${POM_FILE}"
+      }
+    }
 
     // Build Container Image using the artifacts produced in previous stages
     stage('Build Container Image'){
