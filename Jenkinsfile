@@ -102,7 +102,9 @@ pipeline {
     stage('Promotion gate') {
       steps {
         script {
-          input message: 'Promote application to Production?'
+        timeout(time: 60, unit: 'SECONDS') {
+          	input message: 'Promote application to Production?'
+          }
         }
       }
     }
