@@ -1,7 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>openshift.hello</groupId>
@@ -29,13 +27,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-<dependency>
-      <groupId>org.keycloak.bom</groupId>
-      <artifactId>keycloak-adapter-bom</artifactId>
-      <version>4.8.3.Final-redhat-00001</version>
-      <type>pom</type>
-      <scope>import</scope>
-    </dependency>
+            <dependency>
+                <groupId>org.keycloak.bom</groupId>
+                <artifactId>keycloak-adapter-bom</artifactId>
+                <version>4.8.3.Final-redhat-00001</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -63,50 +61,50 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-	    
-	<!-- Micrometer Prometheus registry  -->
-	<dependency>
-		<groupId>io.micrometer</groupId>
-		<artifactId>micrometer-registry-prometheus</artifactId>
-	</dependency>
-	    
+
+        <!-- Micrometer Prometheus registry  -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
+
         <!--SpringFox dependencies -->
-        
+
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${springfox-version}</version>
         </dependency>
-       
+
         <!--Keycloak dependency-->
-	<dependency>
-    <groupId>org.keycloak</groupId>
-    <artifactId>keycloak-spring-boot-starter</artifactId>
-</dependency>        
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-spring-boot-starter</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-version}</version>
         </dependency>
-       
+
         <!-- Guava version override for https://github.com/springfox/springfox/issues/2795 -->
-        
-        
+
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>27.1-jre</version>
         </dependency>
-       
+
         <!-- https://mvnrepository.com/artifact/io.swagger/swagger-core -->
-        
+
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-core</artifactId>
             <version>${swagger-core-version}</version>
         </dependency>
-       
+
     </dependencies>
 
 
@@ -151,8 +149,8 @@
                 </executions>
             </plugin>
             <!-- owasp dependency check plugin -->
-            
-	    <!-- <plugin>
+
+            <!-- <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>5.2.1</version>
@@ -168,7 +166,7 @@
                     </execution>
                 </executions>
             </plugin> -->
-           
+
         </plugins>
     </build>
 
@@ -183,7 +181,7 @@
             <name>Redhat EA Repository</name>
             <url>https://maven.repository.redhat.com/earlyaccess/all/</url>
         </repository>
-        
+
     </repositories>
     <pluginRepositories>
         <pluginRepository>
