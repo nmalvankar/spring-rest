@@ -12,9 +12,9 @@ openshift.withCluster() {
   env.APP_NAME = "${JOB_NAME}".replaceAll(/-build.*/, '')
   echo "Starting Pipeline for ${APP_NAME}..."
   env.BUILD = "${env.NAMESPACE}"
-  env.DEV = "${APP_NAME}-dev"
-  env.STAGE = "${APP_NAME}-stage"
-  env.PROD = "${APP_NAME}-prod"
+  env.DEV = "${APP_NAME}-dev1"
+  env.STAGE = "${APP_NAME}-stage1"
+  env.PROD = "${APP_NAME}-prod1"
 }
 
 pipeline {
