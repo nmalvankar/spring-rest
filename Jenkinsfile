@@ -38,7 +38,7 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject() {
-              def result = openshift.raw("import-image spring-rest:1.0 --from=registry.gitlab.com/nmalvankar/spring-rest:1.0 --reference-policy=local --confirm")
+              def result = openshift.raw("import-image basic-spring-boot:1.0 --from=registry.gitlab.com/nmalvankar/spring-rest:1.0 --reference-policy=local --confirm")
               echo "Import Image Status: ${result.out}"
             }
           }
@@ -54,7 +54,7 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject() {
-              apply = openshift.apply(openshift.process(".openshift/templates/deployment.yml", "-p", "APPLICATION_NAME=basic-spring-boot", "-p", "NAMESPACE=dev01", "-p", "SA_NAMESPACE=dev01", "-p", "READINESS_PATH=/health", "-p", "READINESS_RESPONSE=status.:.UP"))
+              apply = openshift.apply(openshift.process("https://raw.githubusercontent.com/nmalvankar/spring-rest/docker/.openshift/templates/deployment.yml", "-p", "APPLICATION_NAME=basic-spring-boot", "-p", "NAMESPACE=dev01", "-p", "SA_NAMESPACE=dev01", "-p", "READINESS_PATH=/health", "-p", "READINESS_RESPONSE=status.:.UP"))
               dc = openshift.selector("dc", "basic-spring-boot")
               dc.rollout().latest()
               timeout(10) {
