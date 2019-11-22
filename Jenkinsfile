@@ -38,15 +38,13 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject() {
-              def result = openshift.raw("import-image basic-spring-boot:1.0 --from=registry.gitlab.com/nmalvankar/spring-rest:1.0 --reference-policy=local --confirm")
+              def result = openshift.raw("import-image basic-spring-boot:1.1 --from=registry.gitlab.com/nmalvankar/spring-rest:1.1 --reference-policy=local --confirm")
               echo "Import Image Status: ${result.out}"
             }
           }
         }
       }
     }
-
-    //Apply the application template
 
     // Deploy the image
     stage('Deploy') {
@@ -56,7 +54,7 @@ pipeline {
             openshift.withProject() {
               apply = openshift.apply(openshift.process("https://raw.githubusercontent.com/nmalvankar/spring-rest/docker/.openshift/templates/deployment.yml", "-p", "APPLICATION_NAME=basic-spring-boot", "-p", "NAMESPACE=dev01", "-p", "SA_NAMESPACE=dev01", "-p", "READINESS_PATH=/health", "-p", "READINESS_RESPONSE=status.:.UP"))
               dc = openshift.selector("dc", "basic-spring-boot")
-              dc.rollout().latest()
+              //dc.rollout().latest()
               timeout(10) {
                   dc.rollout().status()
               }
@@ -65,13 +63,15 @@ pipeline {
         }
       }
     }
-    // stage('Component Test') {
-    //   steps {
-    //     script {
-    //       sh "curl -s -X POST http://cart:8080/api/cart/dummy/666/1"
-    //       sh "curl -s http://cart:8080/api/cart/dummy | grep 'Dummy Product'"
-    //     }
-    //   }
-    // }
+
+    //Simple Integration Test
+    stage('Integration Test') {
+      steps {
+        script {
+          sh "curl -X GET http://basic-spring-boot-dev01.apps.toronto-13fa.open.redhat.com/v1/envinfo"
+          sh "curl -X GET "http://basic-spring-boot-dev01.apps.toronto-13fa.open.redhat.com/v1/greeting"
+        }
+      }
+    }
   }
 }
