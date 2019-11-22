@@ -108,9 +108,17 @@ objects:
               command:
               - /bin/bash
               - -c
-              - curl -s 'http://localhost:8080${READINESS_PATH}'
-                |grep -iq '${READINESS_RESPONSE}'
+              - curl -s 'http://localhost:8080${READINESS_PATH}' | grep -iq '${READINESS_RESPONSE}'
         terminationGracePeriodSeconds: 60
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${APPLICATION_NAME}
+        from:
+          kind: ImageStreamTag
+          name: ${APPLICATION_NAME}:latest
+      type: ImageChange   
 parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
