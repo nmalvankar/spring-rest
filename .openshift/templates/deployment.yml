@@ -90,7 +90,7 @@ objects:
             value: ${JWS_ADMIN_USERNAME}
           - name: JWS_ADMIN_PASSWORD
             value: ${JWS_ADMIN_PASSWORD}
-          image: ${APPLICATION_NAME}
+          image: ${IMAGESTREAM_REFERENCE}
           imagePullPolicy: Always
           volumeMounts:
           - name: ${APPLICATION_NAME}
@@ -110,15 +110,6 @@ objects:
               - -c
               - curl -s 'http://localhost:8080${READINESS_PATH}' | grep -iq '${READINESS_RESPONSE}'
         terminationGracePeriodSeconds: 60
-    triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - ${APPLICATION_NAME}
-        from:
-          kind: ImageStreamTag
-          name: ${APPLICATION_NAME}:${IMAGE_STREAM_TAG}
-      type: ImageChange   
 parameters:
 - description: The name for the application.
   name: APPLICATION_NAME
@@ -138,6 +129,6 @@ parameters:
   name: READINESS_RESPONSE
   required: true
   value: 'Hello World!'
-- description: 'Image Stream Tag of the Application Image'
-  name: IMAGE_STREAM_TAG
+- description: 'Image ID of the of the Image Stream Tag'
+  name: IMAGESTREAM_REFERENCE
   required: true
