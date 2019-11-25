@@ -117,7 +117,7 @@ objects:
         - ${APPLICATION_NAME}
         from:
           kind: ImageStreamTag
-          name: ${APPLICATION_NAME}:1.1
+          name: ${APPLICATION_NAME}:${IMAGE_STREAM_TAG}
       type: ImageChange   
 parameters:
 - description: The name for the application.
@@ -138,3 +138,6 @@ parameters:
   name: READINESS_RESPONSE
   required: true
   value: 'Hello World!'
+- description: 'Image Stream Tag of the Application Image'
+  name: IMAGE_STREAM_TAG
+  required: true
