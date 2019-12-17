@@ -22,6 +22,7 @@ public class EnvInfo {
 
   public static Map<String,String> mapEnvInfo(String filter) throws IOException {
       Process proc = Runtime.getRuntime().exec("env");
+      System.out.println("Testing Image Change");
       Map<String, String> ret = new HashMap<String,String>();
             try (InputStream stream = proc.getInputStream()) {
           try (Scanner s = new Scanner(stream).useDelimiter("\\n")) {

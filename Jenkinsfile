@@ -24,7 +24,7 @@ pipeline {
   // After Pipeline completes the Pod is killed so every run will have clean
   // workspace
   agent {
-    label 'maven'
+    label 'maven-jdk11'
   }
 
   // Pipeline Stages start here
@@ -73,52 +73,6 @@ pipeline {
         // This places your artifacts into right location inside your S2I image
         // if the S2I image supports it.
         binaryBuild(projectName: env.BUILD, buildConfigName: env.APP_NAME, buildFromPath: "oc-build")}
-    }
-
-    stage('Promote from Build to Dev') {
-      steps {
-        tagImage(sourceImageName: env.APP_NAME, sourceImagePath: env.BUILD, toImagePath: env.DEV)
-      }
-    }
-
-    stage ('Verify Deployment to Dev') {
-      steps {
-        verifyDeployment(projectName: env.DEV, targetApp: env.APP_NAME)
-      }
-    }
-
-    stage('Promote from Dev to Stage') {
-      steps {
-        tagImage(sourceImageName: env.APP_NAME, sourceImagePath: env.DEV, toImagePath: env.STAGE)
-      }
-    }
-
-    stage ('Verify Deployment to Stage') {
-      steps {
-        verifyDeployment(projectName: env.STAGE, targetApp: env.APP_NAME)
-      }
-    }
-
-    stage('Promotion gate') {
-      steps {
-        script {
-        timeout(time: 60, unit: 'SECONDS') {
-          	input message: 'Promote application to Production?'
-          }
-        }
-      }
-    }
-
-    stage('Promote from Stage to Prod') {
-      steps {
-        tagImage(sourceImageName: env.APP_NAME, sourceImagePath: env.STAGE, toImagePath: env.PROD)
-      }
-    }
-
-    stage ('Verify Deployment to Prod') {
-      steps {
-        verifyDeployment(projectName: env.PROD, targetApp: env.APP_NAME)
-      }
     }
   }
 }
